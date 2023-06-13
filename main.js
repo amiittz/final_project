@@ -57,6 +57,29 @@ function login() {
   }
 }
 
+function add_user() {
+  var users = JSON.parse(localStorage.getItem('users'));
+  var name = document.getElementById("user_name").value;
+  var password = document.getElementById("user_pass").value;
+
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].name === name) {
+      alert("Username already exists. Please choose a different username.");
+      return;
+    }
+  }
+
+  var newUser = new User(name, password, false);
+
+  users.push(newUser);
+
+  localStorage.setItem('users', JSON.stringify(users));
+
+  document.getElementById("user_name").value = "";
+  document.getElementById("user_pass").value = "";
+
+  alert("User added successfully!");
+}
 
 function chack()
 {
