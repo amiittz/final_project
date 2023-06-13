@@ -23,7 +23,6 @@ if (!localStorage.getItem('users')) {
     new User("admin", 123, true)
   ]));
 }
-
 // Check if movies exist in local storage
 if (!localStorage.getItem('movies')) {
   localStorage.setItem('movies', JSON.stringify([
