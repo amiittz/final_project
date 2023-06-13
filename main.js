@@ -1,4 +1,4 @@
-localStorage.clear()
+//localStorage.clear()
 class Movie {
   constructor(name, png, seats, prices) {
     this.name = name;
@@ -21,13 +21,13 @@ let user_index = -1;
 
 if (!localStorage.getItem('users')) {
   localStorage.setItem('users', JSON.stringify([
-    new User("admin", 123, true)
+    new User("admin", "123", true)
   ]));
 }
 // Check if movies exist in local storage
 if (!localStorage.getItem('movies')) {
   localStorage.setItem('movies', JSON.stringify([
-    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
+    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
     ,new Movie("Indiana Jones", "pic/indiana_jones.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 12)
     ,new Movie("Harry Potter", "pic/hary_potter.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 15)
     ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
@@ -46,6 +46,7 @@ function login() {
         flag = false;
         user_index = i;
         is_admin = users[i].is_admin;
+
       } else {
         alert("Password error");
         flag = false;
@@ -54,6 +55,9 @@ function login() {
   }
   if (flag) {
     alert("The user doesn't exist. Try adding a new user.");
+  }
+  if (is_admin) {
+    document.getElementById("add").style.visibility="visible"
   }
 }
 
