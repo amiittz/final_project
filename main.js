@@ -1,4 +1,4 @@
-
+localStorage.clear()
 class Movie {
   constructor(name, png, seats, prices) {
     this.name = name;
@@ -16,27 +16,69 @@ class User {
   }
 }
 
-
-let is_admin=false;
+let is_admin = false;
+let user_index = -1;
 
 if (!localStorage.getItem('users')) {
   localStorage.setItem('users', JSON.stringify([
-    new User("admin","123",true)
+    new User("admin", 123, true)
   ]));
 }
-
 // Check if movies exist in local storage
 if (!localStorage.getItem('movies')) {
   localStorage.setItem('movies', JSON.stringify([
-    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
+    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
     ,new Movie("Indiana Jones", "pic/indiana_jones.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 12)
     ,new Movie("Harry Potter", "pic/hary_potter.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 15)
     ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
   ]));
 }
 
-if (!localStorage.getItem('selectedMovie')) {
-  localStorage.setItem('selectedMovie',-1)
+function login() {
+  var users = JSON.parse(localStorage.getItem('users'));
+  let flag = true;
+  user_index = -1;
+  is_admin = false; 
+
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].name === document.getElementById("user_name").value) {
+      if (users[i].password === document.getElementById("user_pass").value) {
+        flag = false;
+        user_index = i;
+        is_admin = users[i].is_admin;
+      } else {
+        alert("Password error");
+        flag = false;
+      }
+    }
+  }
+  if (flag) {
+    alert("The user doesn't exist. Try adding a new user.");
+  }
+}
+
+function add_user() {
+  var users = JSON.parse(localStorage.getItem('users'));
+  var name = document.getElementById("user_name").value;
+  var password = document.getElementById("user_pass").value;
+
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].name === name) {
+      alert("Username already exists. Please choose a different username.");
+      return;
+    }
+  }
+
+  var newUser = new User(name, password, false);
+
+  users.push(newUser);
+
+  localStorage.setItem('users', JSON.stringify(users));
+
+  document.getElementById("user_name").value = "";
+  document.getElementById("user_pass").value = "";
+
+  alert("User added successfully!");
 }
 
 function chack()
@@ -69,7 +111,7 @@ function add_movie() {
     let temp = new Movie(
       document.getElementById("name").value,
       document.getElementById("pic").value,
-      [0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       parseFloat(document.getElementById("price").value)
     );
     movies.push(temp);

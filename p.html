@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="main.js"></script>
     <title>Document</title>
-    
 </head>
 <body>
+    <input type="text" id="user_name" maxlength="10">
+    <input type="text" id="user_pass" maxlength="10">
+    <button onclick="login()">login</button>
+    <button onclick="add_user()">register</button>
     <br><br>
     <button onclick="chack()">add_movie</button>
-    <div id="addMovie" style="display:none"><a href="add_movie.html">add movie</a></div>
     <br><br>
-    <button onclick="print_all()">print all</button>
-    <p><span id="result" ></span></p>
+    <p><span id="result"></span></p>
+    <script>
+      window.addEventListener('load', print_all);
+    </script>
 </body>
 </html>
