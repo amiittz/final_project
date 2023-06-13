@@ -45,6 +45,7 @@ function login() {
         flag = false;
         user_index = i;
         is_admin = users[i].is_admin;
+        alert("login successfully");
       } else {
         alert("Password error");
         flag = false;
@@ -144,4 +145,3 @@ function generate_movie_HTML(movie) {
   html += '<br><img src="' + movie.png + '"><br>';
   return html;
 }
-
