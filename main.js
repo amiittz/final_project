@@ -15,11 +15,12 @@ class User {
   }
 }
 
-let is_admin=false;
+let is_admin = false;
+let user_index = -1;
 
 if (!localStorage.getItem('users')) {
   localStorage.setItem('users', JSON.stringify([
-    new User("admin","123",true)
+    new User("admin", 123, true)
   ]));
 }
 
@@ -32,6 +33,30 @@ if (!localStorage.getItem('movies')) {
     ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
   ]));
 }
+
+function login() {
+  var users = JSON.parse(localStorage.getItem('users'));
+  let flag = true;
+  user_index = -1;
+  is_admin = false; 
+
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].name === document.getElementById("user_name").value) {
+      if (users[i].password === document.getElementById("user_pass").value) {
+        flag = false;
+        user_index = i;
+        is_admin = users[i].is_admin;
+      } else {
+        alert("Password error");
+        flag = false;
+      }
+    }
+  }
+  if (flag) {
+    alert("The user doesn't exist. Try adding a new user.");
+  }
+}
+
 
 function chack()
 {
