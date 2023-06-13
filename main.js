@@ -14,6 +14,15 @@ class User {
     this.is_admin = admin;
   }
 }
+
+let is_admin=false;
+
+if (!localStorage.getItem('users')) {
+  localStorage.setItem('users', JSON.stringify([
+    new User("admin","123",true)
+  ]));
+}
+
 // Check if movies exist in local storage
 if (!localStorage.getItem('movies')) {
   localStorage.setItem('movies', JSON.stringify([
@@ -24,6 +33,17 @@ if (!localStorage.getItem('movies')) {
   ]));
 }
 
+function chack()
+{
+  if(is_admin)
+  {
+    window.location.href = "add_movie.html";
+  }
+  else
+  {
+    alert("not admin");
+  }
+}
 function add_movie() {
   var movies = JSON.parse(localStorage.getItem('movies'));
   let flag = true;
@@ -69,3 +89,4 @@ function generate_movie_HTML(movie) {
   html += '<br><img src="' + movie.png + '"><br>';
   return html;
 }
+
