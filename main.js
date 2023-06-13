@@ -26,10 +26,10 @@ if (!localStorage.getItem('users')) {
 // Check if movies exist in local storage
 if (!localStorage.getItem('movies')) {
   localStorage.setItem('movies', JSON.stringify([
-    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [0, 0, 0, 0, 0], 10)
-    ,new Movie("Indiana Jones", "pic/indiana_jones.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0], 12)
-    ,new Movie("Harry Potter", "pic/hary_potter.jpg", [0, 0, 0], 15)
-    ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0], 10)
+    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
+    ,new Movie("Indiana Jones", "pic/indiana_jones.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 12)
+    ,new Movie("Harry Potter", "pic/hary_potter.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 15)
+    ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
   ]));
 }
 
@@ -76,12 +76,20 @@ function add_movie() {
 
 function print_all() {
   var movies = JSON.parse(localStorage.getItem('movies'));
-  let allMoviesHTML = "";
   for (let i = 0; i < movies.length; i++) {
-      allMoviesHTML += generate_movie_HTML(movies[i]);
-  }
+      
+      let a =document.createElement("a");
 
-  document.getElementById("result").innerHTML = allMoviesHTML;
+      const createButton = document.createElement('button');
+      createButton.id = i;
+      createButton.innerHTML = "order tickets";
+      
+      a.appendChild(createButton)
+      a.href = "movie.html"
+      document.getElementById("result").innerHTML += generate_movie_HTML(movies[i]);
+      document.getElementById("result").appendChild(a);
+      document.getElementById("result").innerHTML +="<br><br><br>"
+  }
 }
 
 function generate_movie_HTML(movie) {
