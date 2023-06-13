@@ -1,3 +1,4 @@
+
 class Movie {
   constructor(name, png, seats, prices) {
     this.name = name;
@@ -15,6 +16,7 @@ class User {
   }
 }
 
+
 let is_admin=false;
 
 if (!localStorage.getItem('users')) {
@@ -31,6 +33,10 @@ if (!localStorage.getItem('movies')) {
     ,new Movie("Harry Potter", "pic/hary_potter.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 15)
     ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 10)
   ]));
+}
+
+if (!localStorage.getItem('selectedMovie')) {
+  localStorage.setItem('selectedMovie',-1)
 }
 
 function chack()
@@ -74,21 +80,32 @@ function add_movie() {
   }
 }
 
+
 function print_all() {
+
   var movies = JSON.parse(localStorage.getItem('movies'));
   for (let i = 0; i < movies.length; i++) {
-      
-      let a =document.createElement("a");
+    let a = document.createElement("a");
 
-      const createButton = document.createElement('button');
-      createButton.id = i;
-      createButton.innerHTML = "order tickets";
-      
-      a.appendChild(createButton)
-      a.href = "movie.html"
-      document.getElementById("result").innerHTML += generate_movie_HTML(movies[i]);
-      document.getElementById("result").appendChild(a);
-      document.getElementById("result").innerHTML +="<br><br><br>"
+    const createButton = document.createElement('button');
+    createButton.id = i;
+    createButton.innerHTML = "order tickets";
+    a.appendChild(createButton)
+    a.href = "movie.html"
+    document.getElementById("result").innerHTML += generate_movie_HTML(movies[i]);
+    document.getElementById("result").appendChild(a);
+    document.getElementById("result").innerHTML += "<br><br><br>"
+  }
+  
+  onclicks();
+}
+
+function onclicks() {
+  var movies = JSON.parse(localStorage.getItem('movies'));
+  for (let i = 0; i < movies.length; i++) {
+    document.getElementById(i).onclick = function() {
+      localStorage.setItem("selectedMovie",i);
+    }
   }
 }
 
@@ -97,4 +114,3 @@ function generate_movie_HTML(movie) {
   html += '<br><img src="' + movie.png + '"><br>';
   return html;
 }
-
