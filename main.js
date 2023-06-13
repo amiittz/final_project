@@ -1,72 +1,71 @@
 class Movie {
-    constructor(seats, name, png,p) {
-      this.name = name;
-      this.png = png;
-      this.seats = seats;
-      this.prices =p;
-    }
-    get_name()
-    {
-      return this.name;
-    }
-    get_pic()
-    {
-      return this.prices;
-    }
-    print() {
-      let ans = this.name;
-      ans += '<br><img src="' + this.png + '"><br>';
-      document.getElementById("result").innerHTML = ans;
-    }
-}
-
-class User{
-  constructor(name,pass){
-    this.name=name;
-    this.password=pass;
+  constructor(name, png, seats, prices) {
+    this.name = name;
+    this.png = png;
+    this.seats = seats;
+    this.prices = prices;
   }
 }
 
-class Admin extends User{
-  constructor(name, pass) {
-    super(name, pass);
+class User {
+  constructor(name, pass, admin) {
+    this.name = name;
+    this.password = pass;
+    this.is_admin = admin;
   }
 }
-let movies=[new Movie([0,0,0], "guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg",10)]
-let movie_len=1;
-function add_movie(){
-  let flag=true;
-  for(let i=0;i<movie_len;i++)
-  {
-    if(movies[i].get_name==document.getElementById("name").value)
-    {
-      flag=false;
-      alert("the name of the movie already exists");
+// Check if movies exist in local storage
+if (!localStorage.getItem('movies')) {
+  localStorage.setItem('movies', JSON.stringify([
+    new Movie("guardians_of_the_galaxy", "pic/guardians_of_the_galaxy.jpg", [0, 0, 0, 0, 0], 10)
+    ,new Movie("Indiana Jones", "pic/indiana_jones.jpg", [0, 0, 0, 0, 0, 0, 0, 0, 0], 12)
+    ,new Movie("Harry Potter", "pic/hary_potter.jpg", [0, 0, 0], 15)
+    ,new Movie("Transformers", "pic/transformers.jpg", [0, 0, 0], 10)
+  ]));
+}
+
+function add_movie() {
+  var movies = JSON.parse(localStorage.getItem('movies'));
+  let flag = true;
+
+  for (let i = 0; i < movies.length; i++) {
+    if (movies[i].name === document.getElementById("name").value) {
+      flag = false;
+      alert("The movie name already exists.");
     }
-    if(movies[i].get_pic==document.getElementById("pic").value)
-    {
-      flag=false;
-      alert("the pic path already exists");
+    if (movies[i].png === document.getElementById("pic").value) {
+      flag = false;
+      alert("The image URL already exists.");
     }
   }
-  if(flag)
-  {
-    temp = new Movie(document.getElementById("name").value,document.getElementById("pic").value,document.getElementById("price").value)
-    movies+=temp;
-    movie_len+=1;
+
+  if (flag) {
+    let temp = new Movie(
+      document.getElementById("name").value,
+      document.getElementById("pic").value,
+      [0, 0, 0],
+      parseFloat(document.getElementById("price").value)
+    );
+    movies.push(temp);
+    localStorage.setItem('movies', JSON.stringify(movies));
+    document.getElementById("name").value = "";
+    document.getElementById("pic").value = "";
+    document.getElementById("price").value = "";
   }
 }
 
-function lol()
-{
-  alert(movie_len)
+function print_all() {
+  var movies = JSON.parse(localStorage.getItem('movies'));
+  let allMoviesHTML = "";
+  for (let i = 0; i < movies.length; i++) {
+      allMoviesHTML += generate_movie_HTML(movies[i]);
+  }
+
+  document.getElementById("result").innerHTML = allMoviesHTML;
 }
 
-function print_all()
-{
-  movies[0].print();
-  for(let i=0;i<movie_len;i++)
-  {
-    movies[i].print();
-  }
+function generate_movie_HTML(movie) {
+  let html = movie.name;
+  html += '<br><img src="' + movie.png + '"><br>';
+  return html;
 }

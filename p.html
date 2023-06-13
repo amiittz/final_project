@@ -1,18 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="main.js"></script>
-    <title>Document</title>
+  <title>Movies Page</title>
+  <style>
+    .movie-button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <a href="add_movie.html">movie</a>
-    <br><br>
-    <button onclick="print_all()">print all</button>
-    
-    <button onclick="lol()">lol</button>
-    <p><span id="result" ></span></p>
+<a href="add_movie.html">add movie</a>
+  <h1>Movies Page</h1>
+
+  <div id="buttons"></div>
+
+  <script>
+    // Define the movies and their images
+    const movies = JSON.parse(localStorage.getItem('movies'));
+
+    function createMovieButton(movie) {
+      const button = document.createElement("button");
+      const image = document.createElement("img");
+
+      button.className = "movie-button";
+      image.src = movie.png;
+
+      button.appendChild(image);
+      return button;
+    }
+
+    // Create movie buttons with images
+    const buttonsContainer = document.getElementById("buttons");
+    for (let i = 0; i < movies.length; i++) {
+      const movie = movies[i];
+      const button = createMovieButton(movie);
+
+      buttonsContainer.appendChild(button);
+    }
+  </script>
 </body>
 </html>
