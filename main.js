@@ -1,4 +1,3 @@
-
 class Movie {
   constructor(name, png, seats, prices) {
     this.name = name;
@@ -15,7 +14,6 @@ class User {
     this.is_admin = admin;
   }
 }
-
 
 let is_admin=false;
 
@@ -35,9 +33,6 @@ if (!localStorage.getItem('movies')) {
   ]));
 }
 
-if (!localStorage.getItem('selectedMovie')) {
-  localStorage.setItem('selectedMovie',-1)
-}
 function chack()
 {
   if(is_admin)
@@ -79,32 +74,21 @@ function add_movie() {
   }
 }
 
-
 function print_all() {
-
   var movies = JSON.parse(localStorage.getItem('movies'));
   for (let i = 0; i < movies.length; i++) {
-    let a = document.createElement("a");
+      
+      let a =document.createElement("a");
 
-    const createButton = document.createElement('button');
-    createButton.id = i;
-    createButton.innerHTML = "order tickets";
-    a.appendChild(createButton)
-    a.href = "movie.html"
-    document.getElementById("result").innerHTML += generate_movie_HTML(movies[i]);
-    document.getElementById("result").appendChild(a);
-    document.getElementById("result").innerHTML += "<br><br><br>"
-  }
-  
-  onclicks();
-}
-
-function onclicks() {
-  var movies = JSON.parse(localStorage.getItem('movies'));
-  for (let i = 0; i < movies.length; i++) {
-    document.getElementById(i).onclick = function() {
-      localStorage.setItem("selectedMovie",i);
-    }
+      const createButton = document.createElement('button');
+      createButton.id = i;
+      createButton.innerHTML = "order tickets";
+      
+      a.appendChild(createButton)
+      a.href = "movie.html"
+      document.getElementById("result").innerHTML += generate_movie_HTML(movies[i]);
+      document.getElementById("result").appendChild(a);
+      document.getElementById("result").innerHTML +="<br><br><br>"
   }
 }
 
@@ -113,3 +97,4 @@ function generate_movie_HTML(movie) {
   html += '<br><img src="' + movie.png + '"><br>';
   return html;
 }
+
