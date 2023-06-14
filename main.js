@@ -46,6 +46,10 @@ function login() {
         flag = false;
         user_index = i;
         is_admin = users[i].is_admin;
+        if(is_admin)
+        {
+          localStorage.setItem("is_admin",is_admin);
+        }
         alert("login successfully");
       } else {
         alert("Password error");
@@ -128,7 +132,7 @@ function add_movie() {
 
 
 function print_all() {
-
+  localStorage.setItem("is_admin",false);
   var movies = JSON.parse(localStorage.getItem('movies'));
   for (let i = 0; i < movies.length; i++) {
     let a = document.createElement("a");
